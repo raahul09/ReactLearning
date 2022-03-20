@@ -11,3 +11,13 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+ .inputField{
+  position: relative;
+  margin: 10px !important;
+  width : 40% !important;
+  margin-bottom: 10px !important;
+}
+.errorMgs{
+  position: absolute;
+  bottom: 0;
+}

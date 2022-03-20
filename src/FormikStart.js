@@ -10,42 +10,46 @@ import { useFormik } from 'formik';
 
 const FormikStart = () => {
     // initialize the formik as per input name
-    const initialValues = {
-        firstName: "firstName",
-        lastName: "lastName",
-        phone: "phone",
-        company: "company",
-    }
     const onSubmit = values => {
+        console.log(`values`, values);
+        return values;
     }
-    const validate = (values) => {
-        let errorMsg = {}
-        if (!values.name) {
-            errorMsg.name = 'Required'
+    let validate = values => {
+        let errors = {
+        }
+        if (!values.firstName) {
+            errors.firstName = 'Required'
+        }
+        if (!values.lastName) {
+            errors.lastName = 'Required'
         }
         if (!values.email) {
-            errorMsg.email = 'Required'
+            errors.email = 'Required'
         } else if (!/^[a-zA-Z0-9.! #$%&'*+/=? ^_`{|}~-]+@[a-zA-Z0-9-]+(?:\. [a-zA-Z0-9-]+)*$/i.test(values.email)) {
-            errorMsg.email = "invalid email"
+            errors.email = "invalid email"
         }
         if (!values.phone) {
-            errorMsg.phone = 'Required'
+            errors.phone = 'Required'
         } else if (!values.phone.length >= 8) {
-            errorMsg.phone = 'length must be greater then 8'
+            errors.phone = 'length must be greater then 8'
         }
         if (!values.company) {
-            errorMsg.company = 'Required'
+            errors.company = 'Required'
         }
-        return errorMsg
+        console.log(errors);
+        return errors;
     }
     const formikObjectOfData = useFormik({
-        initialValues,
+        initialValues:{
+            firstName: "",
+            lastName: "",
+            phone: "",
+            company: "",
+        },
         onSubmit,
         validate
     })
-    console.log(`validate`, validate);
-
-
+    // console.log(!formikObjectOfData.errors.firstName?"google":null);
     return (
         <div>
             <Container sx={{ margin: "30px auto" }}>
@@ -56,10 +60,14 @@ const FormikStart = () => {
                 <form onSubmit={formikObjectOfData.handleSubmit}>
                     {/* add handler method onchange event and value as per name */}
                     <Box sx={{ background: "#f8f8f8", padding: "30px", display: "flex", flexWrap: "wrap", justifyContent: "center", maxWidth: "500px", margin: "0 auto" }}>
-                        <TextField onChange={formikObjectOfData.handleChange} value={formikObjectOfData.values.name} id="firstName" name='firstName' sx={{ margin: "10px", width: '40%', marginBottom: "10px" }} label="First Name" variant="standard" />
-                        {/* {<div>{formikObjectOfData.errorMsg.name}</div>}                        <TextField onChange={formikObjectOfData.handleChange} value={formikObjectOfData.values.name} id="lastName" name='lastName' sx={{ margin: "10px", width: '40%', marginBottom: "10px" }} label="Last Name" variant="standard" /> */}
-                        <TextField onChange={formikObjectOfData.handleChange} value={formikObjectOfData.values.name} id="phone" name='phone' sx={{ margin: "10px", width: '40%', marginBottom: "10px" }} label="Phone" variant="standard" />
-                        <TextField onChange={formikObjectOfData.handleChange} value={formikObjectOfData.values.name} id="company" name='company' sx={{ margin: "10px", width: '40%', marginBottom: "10px" }} label="Company" variant="standard" />
+                        <TextField onChange={formikObjectOfData.handleChange} value={formikObjectOfData.values.name} id="firstName" helperText={formikObjectOfData.errors.firstName ? formikObjectOfData.errors.firstName:null} className="inputField" name='firstName'  label="First Name" variant="standard" />
+                        {/* { <div className='errorMgs'>{formikObjectOfData.errors.firstName}</div> : null} */}
+                        <TextField onChange={formikObjectOfData.handleChange} value={formikObjectOfData.values.name} id="lastName"helperText={formikObjectOfData.errors.lastName ? formikObjectOfData.errors.lastName:null} className="inputField" name='lastName' label="Last Name" variant="standard" />
+                        {/* {formikObjectOfData.errors.lastName ? <div className='errorMgs'>{formikObjectOfData.errors.lastName}</div> : null} */}
+                        <TextField onChange={formikObjectOfData.handleChange} value={formikObjectOfData.values.name} id="phone" name='phone'  helperText={formikObjectOfData.errors.phone ? formikObjectOfData.errors.phone:null} className="inputField"  label="Phone" variant="standard" />
+                        ````````````````````````````````````````````````````````````````````````````````````````````````{/* {formikObjectOfData.errors.phone ? <div className='errorMgs'>{formikObjectOfData.errors.phone}</div> : null} */}*.......................
+                                               <TextField onChange={formikObjectOfData.handleChange} value={formikObjectOfData.values.name} id="company" name='company'  helperText={formikObjectOfData.errors.company ? formikObjectOfData.errors.company:null} className="inputField"  label="Company" variant="standard" />
+                        {/* {formikObjectOfData.errors.company ? <div className='errorMgs'>{formikObjectOfData.errors.company}</div> : null} */}
                         <Button variant='contained' sx={{ marginTop: "30px" }} type="Submit" size="large">Submit</Button>
                     </Box>
                 </form>
