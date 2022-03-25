@@ -21,3 +21,17 @@ code {
   position: absolute;
   bottom: 0;
 }
+
+.center-form {
+  height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+form{
+  max-width: 600px;
+  width: 100%;
+  background: #def7ff;
+  padding: 30px;
+}
